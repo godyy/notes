@@ -208,7 +208,7 @@ mod
 
 在拉取项目依赖时，你会发现拉取的过程总共分为了三大步，分别是 finding（发现）、downloading（下载）以及 extracting（提取）， 并且在拉取信息上一共分为了三段内容：
 
-![go-get-pull](resource/go-modules/go-get-pull.jpeg)
+![go-get-pull](../resource/go/go-modules/go-get-pull.jpeg)
 
 需要注意的是，所拉取版本的 commit 时间是以 UTC 时区为准，而并非本地时区，同时我们会发现我们 `go get` 命令所拉取到的版本是 v0.0.0，这是因为我们是直接执行 `go get -u` 获取的，并没有指定任何的版本信息，由 Go modules 自行按照内部规则进行选择。
 
@@ -249,7 +249,7 @@ mod
 
 在项目有发布 tags 的情况下，还存在着多种模式，也就是只有单个模块和多个模块，我们统一以多个模块来进行展示，因为多个模块的情况下就已经包含了单个模块的使用了，如下图：
 
-![go-module-tags](resource/go-modules/go-module-tags.jpeg)
+![go-module-tags](../resource/go/go-modules/go-module-tags.jpeg)
 
 示例项目中一共打了两个tag，分别是：v0.0.1 和 module/tour/v0.0.1。之所以会出现`module/tour/v0.0.1` 这么“奇怪”的 tag，是因为这是同一个项目下存在多个模块的tag表现方式。其主要目录结构为；
 
@@ -331,7 +331,7 @@ import (
 
 我们不断地在 Go Modules 的使用中提到版本号，其实质上被称为“语义化版本”，假设我们的版本号是 v1.2.3，如下：
 
-![semver](resource/go-modules/semver.jpeg)
+![semver](../resource/go/go-modules/semver.jpeg)
 
 其版本格式为“主版本号.次版本号.修订号”，版本号的递增规则如下：
 
@@ -341,7 +341,7 @@ import (
 
 假设你是先行版本号或特殊情况，可以将版本信息追加到“主版本号.次版本号.修订号”的后面，作为延伸，如下：
 
-![semver-pre](resource/go-modules/semver-pre.jpeg)
+![semver-pre](../resource/go/go-modules/semver-pre.jpeg)
 
 至此我们介绍了 Go modules 所支持的两类版本号方式，在我们发布新版本打 tag 的时候，需要注意遵循，否则不遵循语义化版本规则的版本号都是无法进行拉取的。
 
@@ -349,13 +349,13 @@ import (
 
 一个模块往往依赖着许多其它许许多多的模块，并且不同的模块在依赖时很有可能会出现依赖同一个模块的不同版本，如下图（来自 Russ Cox）：
 
-![version-select](resource/go-modules/version-select.jpeg)
+![version-select](../resource/go/go-modules/version-select.jpeg)
 
 在上述依赖中，模块 A 依赖了模块 B 和模块 C，而模块 B 依赖了模块 D，模块 C 依赖了模块 D 和 F，模块 D 又依赖了模块 E，而且同模块的不同版本还依赖了对应模块的不同版本。那么这个时候 Go modules 怎么选择版本，选择的是哪一个版本呢？
 
 我们根据 proposal 可得知，Go modules 会把每个模块的依赖版本清单都整理出来，最终得到一个构建清单，如下图（来自 Russ Cox）：
 
-![version-select-list](resource/go-modules/version-select-list.jpeg)
+![version-select-list](../resource/go/go-modules/version-select-list.jpeg)
 
 我们看到 rough list 和 final list，两者的区别在于重复引用的模块 D（v1.3、v1.4），其最终清单选用了模块 D 的 v1.4 版本，主要原因：
 
