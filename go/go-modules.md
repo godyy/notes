@@ -208,7 +208,7 @@ mod
 
 在拉取项目依赖时，你会发现拉取的过程总共分为了三大步，分别是 finding（发现）、downloading（下载）以及 extracting（提取）， 并且在拉取信息上一共分为了三段内容：
 
-![go-get-pull](go/resource/go modules/go-get-pull.jpeg)
+![go-get-pull](go/resource/go-modules/go-get-pull.jpeg)
 
 需要注意的是，所拉取版本的 commit 时间是以 UTC 时区为准，而并非本地时区，同时我们会发现我们 `go get` 命令所拉取到的版本是 v0.0.0，这是因为我们是直接执行 `go get -u` 获取的，并没有指定任何的版本信息，由 Go modules 自行按照内部规则进行选择。
 
