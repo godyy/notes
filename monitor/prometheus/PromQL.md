@@ -254,7 +254,8 @@ quantile(0.5, http_requests_total)
 Prometheus提供了大量的内置函数，可以对时序数据进行丰富的处理。下面介绍一下一些常用的内置函数以及相关的使用场景和用法。
 
 ## 4.1 计算Counter指标增长率
-`increase(v range-vector)`函数是PromQL中提供的众多内置函数之一。其中参数v是一个区间向量，increase函数获取区间向量中的第一个后最后一个样本并返回其增长量。因此，可以通过以下表达式Counter类型指标的增长率:
+`increase(v range-vector)`函数是PromQL中提供的众多内置函数之一。其中参数v是一个区间向量，increase函数获取区间向量中的第一个和最后一个样本并返回其增长量。因此，可以通过以下表达式Counter类型指标的增长率:
+
 ```
 increase(node_cpu[2m]) / 120
 ```
