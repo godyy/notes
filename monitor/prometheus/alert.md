@@ -1,6 +1,11 @@
 告警能力在Prometheus的架构中被划分为两个部分，在Prometheus Server中定义告警规则以及产生告警，**Alertmanager** 组件则用于处理这些由Prometheus产生的告警。Alertmanager即Prometheus体系中告警的统一处理中心。Alertmanager提供了多种内置第三方告警通知方式，同时还提供了对Webhook通知的支持，通过Webhook用户可以完成对告警更多个性化的扩展。
 
+[TOC]
+
+
+
 # 1. 简介
+
 告警能力在Prometheus的架构中被划分成两个独立的部分。通过在Prometheus中定义 **AlertRule**（告警规则），Prometheus会周期性的对告警规则进行计算，如果满足告警触发条件就会向 **Alertmanager** 发送告警信息。
 
 在Prometheus中一条“告警规则”主要由以下几部分组成：
