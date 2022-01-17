@@ -24,39 +24,39 @@
 ## 1.2 特色
 
 - Multiple isolated environments on a single host，单主机多隔离环境
-
+  
   Compose 使用`project`名称将环境彼此隔离。默认的项目名称是项目所在目录，默认项目目录即 Compose 文件所在目录。可通过`--project-directory`指定项目目录。
-
+  
   项目名称可通过`-p`标志或`COMPOSE_PROJECT_NAME`环境变量指定。
 
 - Preserve volume data when containers are created，创建容器时保留卷数据
-
+  
   Compose 保存服务用到的所有卷。当`docker-compose up`运行时，如果它找到了任何之前运行过的容器，它会拷贝旧容器的卷到新容器中。这样保证了你在卷中创建的任何数据都不会丢失。
 
 - Only recreate containers that have changed，仅重新创建已变更的容器
-
+  
   Compose 缓存创建容器所用配置。当你重启未变更的服务时，Compose 会重用已存在的容器，这样意味着你可以快速变更应用环境。
 
 - Variables and moving a composition between environments，变量和在环境之间移动 composition（一个 Compose 项目）
-
+  
   Compose 文件支持 variables。可以使用变量来根据不同的环境自定义 composition。
-
+  
   可以使用`extends`字段或创建多个 Compose 文件来扩展 Compose 文件。
 
 ## 1.3 通用场景
 
 - 开发环境。
-
+  
   开发软件时，在一个隔离环境中运行应用且与之交互的能力至关重要。
-
+  
   Compose 文件提供了一种方式来记录和配置应用程序的所有服务依赖项（数据库，队列，缓存，web 服务 APIs 等）。使用 Compose 命令行工具可以用一个简单的命令（`docker-compose up`来为每一个依赖项创建和启动一个或多个容器。
 
 - 自动化测试环境
-
+  
   任何 CD 或 CI 过程的一个重要部分是自动化测试套件。端到端的自动化测试需要环境来运行测试。
-
+  
   Compose 提供了一种方便的方法来为你的测试套件创建和销毁隔离的测试环境。通过在 Compose 文件里定义完整的环境，只需要几个命令就可以创建和销毁这些环境。
-
+  
   ```
   docker-compose up -d # 启动
   ./run-tests # 运行测试套件
@@ -64,7 +64,7 @@
   ```
 
 - 单机部署
-
+  
   Compose 在传统上专注于“开发”和“测试流程“，但是随着版本的释出，也在更多产品向的特性上取得了进展。
 
 # 2. 安装与卸载
@@ -88,14 +88,14 @@
 ### 1. 设置项目结构
 
 1. 为项目创建目录。
-
+   
    ```
    mkdir composetest
    cd composetest
    ```
 
 2. 在项目目录中创建`app.py`文件并复制下面代码：
-
+   
    ```
    import time
    
@@ -121,11 +121,11 @@
        count = get_hit_count()
        return 'Hello World! 该页面已被访问 {} 次.\n'.format(count)
    ```
-
+   
    在代码中，`redis`是在应用所在隔离环境网络中的 redis 容器的主机名。我们使用默认的 redis 端口，6379。
 
 3. 创建`requirements.txt`文件并复制：
-
+   
    ```
    flask
    redis
@@ -145,7 +145,7 @@ ENV FLASK_APP=app.py
 ENV FLASK_RUN_HOST=0.0.0.0
 COPY . .
 RUN apk add --no-cache gcc musl-dev linux-headers \
-	&& pip install -r requirements.txt
+    && pip install -r requirements.txt
 EXPOSE 5000
 CMD ["flask", "run"]
 ```
@@ -172,20 +172,20 @@ services:
 ### 4. 使用 Compose 构建和运行应用
 
 1. 在项目目录中，执行`docker-compose up`启动应用。
-
+   
    Compose 会拉取 redis 镜像，构建应用镜像，并启动定义的服务。
 
 2. 在浏览器中输入`http://localhost:5000/`查看应用运行结果。你应该可以看到如下信息：
-
+   
    ```
    Hello World! 该页面已被访问 1 times.
    ```
 
 3. 停止应用有两种方式：
-
+   
    - 在执行`docker-compose up`的终端下按下`CTRL+C`
    - 另起一个终端并切换到应用项目目录，执行`docker-compose down`
-
+   
    两者的区别在于，`down`子命令“默认”会删除创建的容器和默认网络。
 
 ### 5. 编辑 Compose 文件添加 mount 绑定
@@ -211,7 +211,7 @@ services:
 
 ### 6. 重构并执行应用
 
-在项目目录执行`docker-compose up	`即可。
+在项目目录执行`docker-compose up    `即可。
 
 ### 7. 更新程序
 
@@ -235,7 +235,7 @@ return 'Hello from Docker! 该页面已被访问 {} 次.\n'.format(count)
 
 `docker-compose`命令的基本使用格式为：
 
-``` 
+```
 docker-compose [-f=<args>...] [--profile <name>...] [options] [COMMAND] [ARGS...]
 ```
 
@@ -336,7 +336,7 @@ services:
   service1:
     build: .
     image: localhost:5000/yourimage # goes to local registry
-    
+
   service2:
     build: .
     image: your-dockerid/yourimage # goes to your repository on Docker Hub
@@ -372,7 +372,7 @@ docker-compose rm [options] [SERVICE...]
 
 ```
 docker-compose run [options] [-v VOLUME...] [-p PORT...] [-e KEY=VAL...] [-l KEY=VAL...]
-	SERVICE [COMMAND] [ARGS...]
+    SERVICE [COMMAND] [ARGS...]
 ```
 
 命令执行在一个通过指定服务创建的新容器里，好包括新的资源（比如数据卷）。
@@ -380,11 +380,11 @@ docker-compose run [options] [-v VOLUME...] [-p PORT...] [-e KEY=VAL...] [-l KEY
 有两个重要的区别：
 
 1. `run`执行的命令会覆盖服务配置中的定义。
-
+   
    例如，如果`web`服务配置中以`bash`命令启动容器，那么`run web python app.py`会以`python app.py`覆盖之。
 
 2. `run`不会创建任何在服务配置中定义的端口。
-
+   
    这样做是为了避免端口冲突。如果确实需要创建服务端口，可以指定`--service-ports`标志。
 
 如果`run`命令所要启动的服务配置了 links，`run`命令首先会检查链接的服务是否在线，并启动停机的服务。一旦所有链接的服务都在线，`run`命令才执行传递的命令。如果不需要启动链接的服务，使用`--no-deps`标志。
@@ -628,7 +628,7 @@ services:
 ```
 
 > 使用 depends_on 时有几件事需要注意：
->
+> 
 > - `depends_on`在启动`web`之前，不会等待直到`db`和`redis`已准备就绪（状态），只会等到他们启动成功。
 > - 当使用`verison 3`的 Compose 文件来以`swarm mode`部署堆栈时，`depends_on`会被忽略。
 
@@ -682,10 +682,10 @@ external_links:
 ```
 
 > 提醒：
->
-> ​		外部创建的容器必须至少连接到一个与链接到他们的服务相同的网络。
->
-> ​		推荐使用`networks`替代`links`。
+> 
+> ​        外部创建的容器必须至少连接到一个与链接到他们的服务相同的网络。
+> 
+> ​        推荐使用`networks`替代`links`。
 
 ### extra_hosts 添加主机名映射
 
@@ -781,7 +781,7 @@ web:
 `links`还与[`depends_on`](###depends_on 服务之间依赖关系)一样的方式来决定依赖顺序。
 
 > 提醒：
->
+> 
 > 如果同时指定`links`和`networks`，那些具有`links`的服务之间必须至少共享同一个相同的网络。
 
 ### logging 服务日志配置
@@ -853,7 +853,7 @@ networks:
 ```
 
 > 提醒：
->
+> 
 > 网络范围内的别名可被多个容器，甚至多个服务共享。如果是这样，则不能保证别名确切解析道哪个容器。
 
 #### ipv4_address, ipv6_address 网络内静态IP
@@ -865,7 +865,7 @@ networks:
 ### ports 暴露端口
 
 > 提醒：
->
+> 
 > - 不与`network_mode: host`兼容。
 > - `docker-compose run`忽略`ports`，除非`--service-ports`。
 
@@ -878,7 +878,7 @@ networks:
 - `HOSTIPADDR:HOSRTPORT:CONTAINERPORT`或`HOSTIPADDR::CONTAINERPORT`，绑定端口到主机的指定IP
 
 > 提醒：
->
+> 
 > YAML 基于 60 来解析`XX:YY`格式的数字，如果使用低于 60 的容器端口会得到错误的结果。建议总是用字符串来指定端口映射值。
 
 ```
@@ -951,7 +951,7 @@ profiles:
 sysctls:
   net.core.somaxconn: 1024
   net.ipv4.tcp_syncookies: 0
-  
+
 sysctls:
   - net.core.somaxconn=1024
   - net.ipv4.tcp_syncookies=0
@@ -1156,7 +1156,7 @@ volumes:
 
 ### attachable （仅在`driver=overlay`时起作用）
 
-### enable_ipv6 
+### enable_ipv6
 
 ### ipam IP地址管理
 
@@ -1464,7 +1464,7 @@ Compose 在项目目录下的`.env`文件中声明环境变量的默认值。
 - `DOCKER_TLS_VERIFY`
 
 > 提醒：
->
+> 
 > - 运行时指定的变量值总是会覆盖`.env`文件中的值。例如，由命令行参数`-e`传入的值会优先采纳。
 > - 定义在`.env`文件中的环境变量在容器内不是自动可见的。要设置适用于容器的环境变量，请遵循[ 6. 环境变量](# 6. 环境变量)章节内容前面部分提到的方法。
 
@@ -1603,7 +1603,7 @@ $ COMPOSE_PROFILES=dev docker-compose up phpmyadmin
 默认情况下，Compose 会设置一个默认网络。每一个 Compose 创建的容器都会加入到默认网络中，并且可以被网络中的其它容器访问，以与容器名相同的主机名来被发现。
 
 > 注意：
->
+> 
 > 网络名基于项目名创建
 
 举个例子，假设你的 APP 所在目录未`myapp`，并且 Compose 文件内容如下：
@@ -1760,9 +1760,9 @@ networks:
 最好的方法是在程序内设计弹性。但是，如果你不需要这种弹性，那可以使用包装器脚本（wrapper script）来实现：
 
 - 使用诸如 [wait-for-it](), [dockerize](), sh 兼容的 [wait-for](), 或者 [RelayAndContainers]() 模版等工具。这些小包装脚本可以包含在应用程序的镜像中，用于轮询给定的主机和端口，直到它接受TCP连接。
-
+  
   比如，使用`wait-for-it.sh`或`wait-for`包装你的服务指令：
-
+  
   ```
   version: "2"
   services:
@@ -1776,21 +1776,21 @@ networks:
     db:
       image: postgres
   ```
-
+  
   > 提示：
-  >
+  > 
   > 该解决方案有其局限性。例如，其并没有验证服务是否已经“就绪”。
-  >
+  > 
   > 如果你需要为`command`添加更多的参数，可在循环使用`bash shift`命令，就像后面例子中提及的。
 
 - 或者，编写自己的包装器脚本来执行更特定于应用程序的运行状况检查。例如，您可能希望等待，直到Postgres准备好接受命令：
-
+  
   ```
   #!/bin/sh
   # wait-for-postgres.sh
   
   set -e
-    
+  
   host="$1"
   shift # 相当于 shift “1”，将位于 1+1=2 位置的参数移动到 $1位置，$2 后面直到 $# 的参数也一次向左移动
   
@@ -1799,15 +1799,14 @@ networks:
     >&2 echo "Postgres is unavailable - sleeping"
     sleep 1
   done
-    
+  
   >&2 echo "Postgres is up - executing command"
   exec "$@"
   ```
-
+  
   ```
   command: ["./wait-for-postgres.sh", "db", "python", "app.py"]
   ```
-
 
 # 10. 在文件和项目之间共享 Compose 配置
 
@@ -1931,7 +1930,7 @@ dbadmin:
 ## 10.2 扩展服务
 
 > 注意：
->
+> 
 > `extends`字段在早期 Compose 文件格式到 v2.1 版都有支持，但在 Compose v3.x 中不支持。
 
 Docker Compose 的`extends`关键字允许在不同的文件，甚至完全不同的项目之间共享公共配置。如果有多个服务重用一组公共配置选项，那么扩展服务非常有用。使用扩展，您可以在一个地方定义一组公共服务选项，并从任何地方引用它。
