@@ -1,21 +1,19 @@
 [TOC]
 
-
-
 # 1. 基本使用
 
 ## 1.1 命令
 
-| 命令            | 作用                           |
-| --------------- | ------------------------------ |
-| go mod init     | 初始化module，生成go.mod文件   |
-| go mod download | 下载go.mod文件中指明的所有依赖 |
-| go mod tidy     | 整理现有的依赖                 |
-| go mod graph    | 查看现有依赖结构               |
-| go mod edit     | 编辑go.mod文件                 |
-| go mod vendor   | 导出项目所有的依赖到vendor目录 |
-| go mod verify   | 检验一个依赖的模块是否被篡改过 |
-| go mod why      | 查看为什么需要依赖某模块       |
+| 命令              | 作用                   |
+| --------------- | -------------------- |
+| go mod init     | 初始化module，生成go.mod文件 |
+| go mod download | 下载go.mod文件中指明的所有依赖   |
+| go mod tidy     | 整理现有的依赖              |
+| go mod graph    | 查看现有依赖结构             |
+| go mod edit     | 编辑go.mod文件           |
+| go mod vendor   | 导出项目所有的依赖到vendor目录   |
+| go mod verify   | 检验一个依赖的模块是否被篡改过      |
+| go mod why      | 查看为什么需要依赖某模块         |
 
 ## 1.2 环境变量
 
@@ -216,19 +214,19 @@ mod
 
 常用拉去命令如下：
 
-| 命令              | 作用                                                         |
-| :---------------- | :----------------------------------------------------------- |
+| 命令                | 作用                               |
+|:----------------- |:-------------------------------- |
 | go get            | 拉取依赖，会进行指定性拉取（更新），并不会更新所依赖的其它模块。 |
-| go get -u         | 更新现有的依赖，会强制更新它所依赖的其它全部模块，不包括自身。 |
-| go get -u -t ./.. | 更新所有直接依赖和间接依赖的模块版本，包括单元测试中用到的。 |
+| go get -u         | 更新现有的依赖，会强制更新它所依赖的其它全部模块，不包括自身。  |
+| go get -u -t ./.. | 更新所有直接依赖和间接依赖的模块版本，包括单元测试中用到的。   |
 
 拉取具体版本如下：
 
-| 命令                            | 作用                                                    |
-| ------------------------------- | ------------------------------------------------------- |
-| go get golang.org/x/text@latest | 拉取最新的版本，若存在 tag，则优先使用。                |
-| go get golang.org/x/text@master | 拉取 master 分支的最新 commit。                         |
-| go get golang.org/x/text@v0.3.2 | 拉取 tag 为 v0.3.2 的 commit。                          |
+| 命令                              | 作用                                         |
+| ------------------------------- | ------------------------------------------ |
+| go get golang.org/x/text@latest | 拉取最新的版本，若存在 tag，则优先使用。                     |
+| go get golang.org/x/text@master | 拉取 master 分支的最新 commit。                    |
+| go get golang.org/x/text@v0.3.2 | 拉取 tag 为 v0.3.2 的 commit。                  |
 | go get golang.org/x/text@342b2e | 拉取 hash 为 342b231 的 commit，最终会被转换为 v0.3.2。 |
 
 ## 2.2 go get 的版本选择
@@ -265,9 +263,9 @@ mquote
 
 可以看到在 `mquote` 这个项目的根目录有一个 go.mod 文件，而在 `module/tour` 目录下也有一个 go.mod 文件，其模块导入和版本信息的对应关系如下：
 
-| tag               | 模块倒入路径                          | 含义                                             |
-| ----------------- | ------------------------------------- | ------------------------------------------------ |
-| v0.0.1            | github.com/eddycjy/mquote             | mquote 项目的 v 0.0.1 版本                       |
+| tag               | 模块倒入路径                                | 含义                                     |
+| ----------------- | ------------------------------------- | -------------------------------------- |
+| v0.0.1            | github.com/eddycjy/mquote             | mquote 项目的 v 0.0.1 版本                  |
 | module/tour/v0.01 | github.com/eddycjy/mquote/module/tour | mquote 项目下的子模块 module/tour 的 v0.0.1 版本 |
 
 ### 2.2.3 导入主模块和子模块
@@ -305,7 +303,7 @@ go: extracting github.com/eddycjy/mquote/module/tour v0.0.1
 
  Go modules 在主版本号为 v0 和 v1 的情况下省略了版本号，而在主版本号为 v2 及以上则需要明确指定出主版本号，否则会出现冲突，其 tag 与模块导入路径的大致对应关系如下：
 
-| tag    | 导入路径                     |
+| tag    | 导入路径                         |
 | ------ | ---------------------------- |
 | v0.0.0 | github.com/eddycjy/mquote    |
 | v1.0.0 | github.com/eddycjy/mquote    |
@@ -381,4 +379,3 @@ go list [-f format] [-json] [-m] [list flags] [build flags] [packages]
 - `-json`：显示的格式，若不指定该选项，则会一行行输出。
 - `-u`：显示能够升级的模块信息，例如：`cloud.google.com/go v0.26.0 [v0.55.0]`。
 - `-m`：显示当前项目所依赖的全部模块。
-
